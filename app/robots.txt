@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://devsappy.space/sitemap.xml
