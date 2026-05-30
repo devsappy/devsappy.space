@@ -1,25 +1,65 @@
 import Header from '@/components/Header';
+import SiteFooter from '@/components/SiteFooter';
+import Reveal from '@/components/Reveal';
 
 export default function Contact() {
   return (
-    <div className="portfolio-container">
+    <div className="apage">
       <Header />
-      <main className="main-content" style={{ justifyContent: 'center' }}>
-        <h1 className="projects-title" style={{ marginBottom: '40px' }}><span className="caveat-text">Let's</span> Get in Touch</h1>
-        <form style={{ display: 'flex', flexDirection: 'column', gap: '20px', width: '100%', maxWidth: '500px', margin: '0 auto' }}>
-          <input type="text" placeholder="Name" style={{ padding: '15px', backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)', fontSize: '1rem', outline: 'none' }} />
-          <input type="email" placeholder="Email" style={{ padding: '15px', backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)', fontSize: '1rem', outline: 'none' }} />
-          <textarea placeholder="Message" rows="5" style={{ padding: '15px', backgroundColor: 'transparent', border: '1px solid var(--border-color)', color: 'var(--text-color)', fontSize: '1rem', outline: 'none', resize: 'vertical' }}></textarea>
-          <button type="button" className="btn-contact" style={{ alignSelf: 'flex-start', marginTop: '10px' }}><span className="caveat-text" style={{marginRight: '6px', fontSize: '1.2em'}}>Say hello &</span>Send Message</button>
-        </form>
+
+      <main className="apage-main">
+        <section className="contact-wrap">
+          <div className="contact-left">
+            <Reveal as="p" className="ap-eyebrow">[ Let&apos;s Talk ]</Reveal>
+            <h1 className="ap-title contact-title">
+              <span className="line-mask"><span className="line-inner is-static">GOT A</span></span>
+              <span className="line-mask"><span className="line-inner is-static">PROJECT?</span></span>
+            </h1>
+            <Reveal as="p" className="ap-lead" delay={0.1}>
+              Tell me about your idea and let&apos;s build something that grows
+              engagement. I usually reply within 24 hours.
+            </Reveal>
+
+            <Reveal className="contact-details" delay={0.2}>
+              <a href="mailto:hello@sappystudio.com" className="contact-detail">
+                <span className="contact-detail-label">Email</span>
+                <span className="contact-detail-value">hello@sappystudio.com</span>
+              </a>
+              <div className="contact-detail">
+                <span className="contact-detail-label">Based in</span>
+                <span className="contact-detail-value">India — Remote worldwide</span>
+              </div>
+              <div className="contact-detail">
+                <span className="contact-detail-label">Socials</span>
+                <span className="contact-detail-value">Instagram · LinkedIn · X</span>
+              </div>
+            </Reveal>
+          </div>
+
+          <Reveal className="contact-right" delay={0.15}>
+            <form className="contact-form">
+              <label className="field">
+                <span className="field-label">Your name</span>
+                <input type="text" placeholder="Jane Doe" />
+              </label>
+              <label className="field">
+                <span className="field-label">Email</span>
+                <input type="email" placeholder="jane@email.com" />
+              </label>
+              <label className="field">
+                <span className="field-label">Project details</span>
+                <textarea rows="4" placeholder="Tell me what you have in mind..." />
+              </label>
+              <button type="button" className="contact-submit">
+                <span className="contact-submit-fill" />
+                <span className="contact-submit-label">Send Message&nbsp;↗</span>
+              </button>
+            </form>
+          </Reveal>
+        </section>
       </main>
-      <footer className="footer">
-        <div className="footer-item">Nblik</div>
-        <div className="footer-item">Brianly</div>
-        <div className="footer-item">Od Solution</div>
-        <div className="footer-item">Vibe Engine</div>
-        <div className="footer-item">Chatterify</div>
-      </footer>
+
+      <SiteFooter />
     </div>
   );
 }

@@ -1,33 +1,50 @@
 import Header from '@/components/Header';
+import SiteFooter from '@/components/SiteFooter';
+import Reveal from '@/components/Reveal';
+
+const posts = [
+  { title: "The Future of Web Development with Next.js", date: "May 20, 2026", read: "6 min", cat: "Development" },
+  { title: "Mastering Video Editing for the Web", date: "April 15, 2026", read: "8 min", cat: "Motion" },
+  { title: "Design Systems: Why You Need One", date: "March 02, 2026", read: "5 min", cat: "Design" },
+];
 
 export default function Blog() {
-  const posts = [
-    { title: "The Future of Web Development with Next.js", date: "May 20, 2026" },
-    { title: "Mastering Video Editing for the Web", date: "April 15, 2026" },
-    { title: "Design Systems: Why You Need One", date: "March 02, 2026" },
-  ];
-
   return (
-    <div className="portfolio-container">
+    <div className="apage">
       <Header />
-      <main className="main-content" style={{ justifyContent: 'flex-start', paddingTop: '80px' }}>
-        <h1 className="projects-title"><span className="caveat-text">My Thoughts &</span> Blog</h1>
-        <div style={{ maxWidth: '800px', margin: '0 auto', width: '100%', display: 'flex', flexDirection: 'column', gap: '40px' }}>
+
+      <main className="apage-main">
+        <section className="ap-hero">
+          <Reveal as="p" className="ap-eyebrow">[ Journal ]</Reveal>
+          <h1 className="ap-title">
+            <span className="line-mask"><span className="line-inner is-static">THOUGHTS</span></span>
+            <span className="line-mask"><span className="line-inner is-static">&amp; WRITING</span></span>
+          </h1>
+          <Reveal as="p" className="ap-lead" delay={0.1}>
+            Notes on building for the web — development, motion design and the
+            craft of digital experiences.
+          </Reveal>
+        </section>
+
+        <section className="blog-list">
           {posts.map((post, idx) => (
-            <div key={idx} style={{ borderBottom: '1px solid var(--border-color)', paddingBottom: '20px', textAlign: 'left' }}>
-              <p style={{ fontSize: '0.9rem', opacity: 0.6, marginBottom: '10px' }}>{post.date}</p>
-              <h2 style={{ fontSize: '1.5rem', fontFamily: 'var(--font-playfair), serif', cursor: 'pointer', transition: 'color 0.2s' }} className="blog-title">{post.title}</h2>
-            </div>
+            <Reveal className="blog-row" key={idx} delay={idx * 0.06}>
+              <span className="blog-num">{String(idx + 1).padStart(2, '0')}</span>
+              <div className="blog-main">
+                <h2 className="blog-headline">{post.title}</h2>
+                <div className="blog-meta">
+                  <span>{post.cat}</span>
+                  <span>{post.date}</span>
+                  <span>{post.read} read</span>
+                </div>
+              </div>
+              <span className="blog-arrow">↗</span>
+            </Reveal>
           ))}
-        </div>
+        </section>
       </main>
-      <footer className="footer">
-        <div className="footer-item">Nblik</div>
-        <div className="footer-item">Brianly</div>
-        <div className="footer-item">Od Solution</div>
-        <div className="footer-item">Vibe Engine</div>
-        <div className="footer-item">Chatterify</div>
-      </footer>
+
+      <SiteFooter />
     </div>
   );
 }
