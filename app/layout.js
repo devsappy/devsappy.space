@@ -18,7 +18,7 @@ const caveat = Caveat({
 
 export const metadata = {
   title: "Sappy - Portfolio",
-  description: "Website developer & Video editor based in India",
+  description: "Saptarshi Chattopadhyay — Full Stack Engineer based in India, building interactive web apps with React, Next.js, Three.js and Python/FastAPI.",
 };
 
 export default function RootLayout({ children }) {

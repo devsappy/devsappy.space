@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from 'react';
 import Header from '@/components/Header';
 import SiteFooter from '@/components/SiteFooter';
 import Reveal from '@/components/Reveal';
@@ -42,6 +45,9 @@ const projects = [
 ];
 
 export default function Projects() {
+  const [activeIdx, setActiveIdx] = useState(0);
+  const active = projects[activeIdx];
+
   return (
     <div className="apage">
       <Header />
@@ -55,44 +61,70 @@ export default function Projects() {
           </h1>
           <Reveal as="p" className="ap-lead" delay={0.1}>
             A handpicked set of digital products, landing pages and immersive
-            experiences — built end to end, from concept to launch.
+            experiences — built end to end, from concept to launch. Pick a
+            project to preview it live.
           </Reveal>
         </section>
 
-        <section className="work-list">
-          {projects.map((proj, idx) => (
-            <Reveal className="work-item" key={proj.title} delay={(idx % 2) * 0.08}>
-              <div className="work-preview">
-                <div className="work-browser">
-                  <div className="work-browser-bar">
-                    <span className="dot red" />
-                    <span className="dot yellow" />
-                    <span className="dot green" />
-                    <span className="work-url">{proj.url.replace('https://', '')}</span>
-                  </div>
-                  <div className="work-frame">
-                    <iframe src={proj.url} title={proj.title} loading="lazy" />
-                  </div>
-                </div>
-              </div>
-
-              <div className="work-info">
-                <span className="work-index">{String(idx + 1).padStart(2, '0')}</span>
-                <h2 className="work-title">{proj.title}</h2>
-                <div className="work-tags">
-                  {proj.tags.map((t) => (
-                    <span className="work-tag" key={t}>{t}</span>
-                  ))}
-                </div>
-                <p className="work-desc">{proj.description}</p>
-                <a href={proj.url} target="_blank" rel="noopener noreferrer" className="work-link">
-                  <span>Visit Site</span>
+        <Reveal className="work-explorer">
+          <div className="work-rows">
+            {projects.map((proj, idx) => (
+              <div
+                key={proj.title}
+                role="button"
+                tabIndex={0}
+                className={`work-row ${idx === activeIdx ? 'is-active' : ''}`}
+                onClick={() => setActiveIdx(idx)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setActiveIdx(idx);
+                  }
+                }}
+              >
+                <span className="work-row-num">{String(idx + 1).padStart(2, '0')}</span>
+                <span className="work-row-body">
+                  <span className="work-row-title">{proj.title}</span>
+                  <span className="work-row-tags">{proj.tags.join(' · ')}</span>
+                </span>
+                <a
+                  href={proj.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="work-row-visit"
+                  aria-label={`Open ${proj.title} in a new tab`}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <span className="arrow">↗</span>
                 </a>
               </div>
-            </Reveal>
-          ))}
-        </section>
+            ))}
+          </div>
+
+          <div className="work-preview">
+            <div className="work-browser" key={active.url}>
+              <div className="work-browser-bar">
+                <span className="dot red" />
+                <span className="dot yellow" />
+                <span className="dot green" />
+                <span className="work-url">{active.url.replace('https://', '')}</span>
+              </div>
+              <div className="work-frame">
+                <iframe src={active.url} title={active.title} loading="lazy" />
+              </div>
+            </div>
+            <p className="work-preview-desc">{active.description}</p>
+            <a
+              href={active.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="work-preview-link"
+            >
+              <span>Visit Site</span>
+              <span className="arrow">↗</span>
+            </a>
+          </div>
+        </Reveal>
       </main>
 
       <SiteFooter />

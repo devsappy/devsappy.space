@@ -12,11 +12,52 @@ const stats = [
 
 const services = [
   "Web Development",
-  "Landing Page Design",
-  "Video Editing",
-  "Motion Graphics",
-  "Creative Direction",
-  "Immersive Experiences",
+  "React & Next.js",
+  "3D & WebGL (Three.js)",
+  "Motion & GSAP Animation",
+  "Python & FastAPI Backends",
+  "AI / LLM Integration",
+  "Video Editing & Motion Graphics",
+];
+
+const experience = [
+  {
+    role: "Research & Development Specialist",
+    org: "Multiplier AI",
+    period: "Jun 2026 — Present",
+    desc: "Conducting research across revenue and marketing-related aspects to support product and business decisions.",
+  },
+  {
+    role: "Full Stack Engineer",
+    org: "Vibe Engine AI",
+    period: "Aug 2025 — Jun 2026",
+    desc: "Built interactive, animation-driven web apps with React, Next.js, Tailwind CSS and a Python/FastAPI backend — including Three.js 3D visualizations and GSAP-driven storytelling.",
+  },
+  {
+    role: "Video Editor",
+    org: "OD Solution, Austria",
+    period: "Feb 2025 — Oct 2025",
+    desc: "Edited video content and motion graphics using Adobe Premiere Pro and After Effects.",
+  },
+  {
+    role: "Frontend & AI/ML Developer",
+    org: "Brainly",
+    period: "May 2023 — Jul 2023",
+    desc: "Built frontend features in React and contributed to model training work.",
+  },
+];
+
+const education = [
+  {
+    degree: "B.Tech, Electronics & Communication Engineering",
+    school: "Institute of Engineering and Management, Kolkata",
+    period: "Jul 2023 — May 2027",
+  },
+  {
+    degree: "Higher Secondary, PCMC",
+    school: "Kalyani Public School",
+    period: "Apr 2021 — Apr 2023",
+  },
 ];
 
 export default function Sappy() {
@@ -43,18 +84,20 @@ export default function Sappy() {
 
         <section className="about-body">
           <Reveal as="p" className="about-lead">
-            Hi, I&apos;m Sappy — a Website Developer &amp; Video Editor based in India.
+            Hi, I&apos;m Saptarshi Chattopadhyay (Sappy) — a Full Stack Engineer based in India.
           </Reveal>
           <Reveal as="p" className="about-text" delay={0.05}>
-            With over 4 years of experience, I specialize in crafting digital experiences
-            that are not only visually stunning but also highly functional. Whether it&apos;s
-            building a sleek modern web application or editing a fast-paced promotional video,
-            I bring a keen eye for detail and a drive for perfection.
+            I build interactive, performant web applications end to end — React, Next.js and
+            Tailwind CSS on the frontend, Three.js and GSAP for immersive 3D and motion, and
+            Python with FastAPI on the backend. I&apos;m currently applying that background to
+            applied research and development work, moving comfortably between research,
+            implementation and delivery.
           </Reveal>
           <Reveal as="p" className="about-text" delay={0.1}>
-            When I&apos;m not coding or editing, you can find me exploring new design trends,
-            learning new tech stacks, or working on passion projects. Let&apos;s build something
-            amazing together.
+            Alongside development, I work with AI/LLM integrations (Groq API), edit video and
+            motion graphics in Adobe Premiere Pro &amp; After Effects, and always verify what I
+            ship across devices and browsers before release. Let&apos;s build something amazing
+            together.
           </Reveal>
         </section>
 
@@ -74,6 +117,37 @@ export default function Sappy() {
               <Reveal className="about-service" key={srv} delay={i * 0.05}>
                 <span className="about-service-dot">✦</span>
                 {srv}
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="about-experience">
+          <Reveal as="h2" className="about-services-title">Experience</Reveal>
+          <div className="about-exp-list">
+            {experience.map((exp, i) => (
+              <Reveal className="about-exp-item" key={exp.role + exp.org} delay={i * 0.05}>
+                <div className="about-exp-head">
+                  <h3 className="about-exp-role">{exp.role}</h3>
+                  <span className="about-exp-period">{exp.period}</span>
+                </div>
+                <span className="about-exp-org">{exp.org}</span>
+                <p className="about-exp-desc">{exp.desc}</p>
+              </Reveal>
+            ))}
+          </div>
+        </section>
+
+        <section className="about-education">
+          <Reveal as="h2" className="about-services-title">Education</Reveal>
+          <div className="about-exp-list">
+            {education.map((ed, i) => (
+              <Reveal className="about-exp-item" key={ed.degree} delay={i * 0.05}>
+                <div className="about-exp-head">
+                  <h3 className="about-exp-role">{ed.degree}</h3>
+                  <span className="about-exp-period">{ed.period}</span>
+                </div>
+                <span className="about-exp-org">{ed.school}</span>
               </Reveal>
             ))}
           </div>

@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-const CLIENTS = ['Nblik', 'Brianly', 'Od Solution', 'Vibe Engine', 'Chatterify'];
+const CLIENTS = ['Multiplier AI', 'Vibe Engine', 'Od Solution', 'Brainly', 'Nblik'];
 
 export default function SiteFooter() {
   return (

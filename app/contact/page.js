@@ -21,18 +21,23 @@ export default function Contact() {
             </Reveal>
 
             <Reveal className="contact-details" delay={0.2}>
-              <a href="mailto:hello@sappystudio.com" className="contact-detail">
+              <a href="mailto:saph.6869@gmail.com" className="contact-detail">
                 <span className="contact-detail-label">Email</span>
-                <span className="contact-detail-value">hello@sappystudio.com</span>
+                <span className="contact-detail-value">saph.6869@gmail.com</span>
               </a>
               <div className="contact-detail">
                 <span className="contact-detail-label">Based in</span>
                 <span className="contact-detail-value">India — Remote worldwide</span>
               </div>
-              <div className="contact-detail">
-                <span className="contact-detail-label">Socials</span>
-                <span className="contact-detail-value">Instagram · LinkedIn · X</span>
-              </div>
+              <a
+                href="https://linkedin.com/in/saptarshichattopadhyay-05380622b"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="contact-detail"
+              >
+                <span className="contact-detail-label">LinkedIn</span>
+                <span className="contact-detail-value">saptarshichattopadhyay</span>
+              </a>
             </Reveal>
           </div>
 
