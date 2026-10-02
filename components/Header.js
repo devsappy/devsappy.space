@@ -1,81 +1,132 @@
 "use client";
 
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { usePathname } from 'next/navigation';
+import { getLenis } from '@/lib/scroll';
+import { person } from '@/lib/content';
 
 const LINKS = [
-  { label: 'Home', href: '/' },
   { label: 'Work', href: '/projects' },
-  { label: 'Blog', href: '/blog' },
   { label: 'About', href: '/sappy' },
+  { label: 'Journal', href: '/blog' },
 ];
 
 export default function Header() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
+  const [open, setOpen] = useState(false);
+  const [tone, setTone] = useState('light');
+  const [scrolled, setScrolled] = useState(false);
+  const burgerRef = useRef(null);
+  const menuRef = useRef(null);
 
+  // Ink on mist, frost on night: read the tone of whatever section is under the bar.
   useEffect(() => {
-    const id = requestAnimationFrame(() => setMounted(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
-
-  useEffect(() => {
-    setIsMenuOpen(false);
+    let raf = 0;
+    const check = () => {
+      raf = 0;
+      const y = 34;
+      let t = 'light';
+      document.querySelectorAll('[data-tone]').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= y && r.bottom > y) t = el.dataset.tone;
+      });
+      setTone(t);
+      const hero = document.querySelector('.hero');
+      const limit = hero ? hero.offsetHeight - window.innerHeight * 0.6 : 40;
+      setScrolled(window.scrollY > limit);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
   }, [pathname]);
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  // Menu open: hold the page still, move focus in, Escape closes.
+  useEffect(() => {
+    const lenis = getLenis();
+    if (!open) {
+      lenis && lenis.start();
+      document.documentElement.classList.remove('menu-open');
+      return undefined;
+    }
+    lenis && lenis.stop();
+    document.documentElement.classList.add('menu-open');
+    const first = menuRef.current && menuRef.current.querySelector('a');
+    first && first.focus();
+    const onKey = (e) => {
+      if (e.key === 'Escape') {
+        setOpen(false);
+        burgerRef.current && burgerRef.current.focus();
+      }
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open]);
+
+  const isActive = (href) => pathname === href || pathname.startsWith(href + '/');
 
   return (
     <>
-      <header className={`ahead ${mounted ? 'is-loaded' : ''}`}>
-        <Link href="/" className="ahead-brand">
-          SAPPY<span>STUDIO</span>
+      <a className="skip" href="#main">Skip to content</a>
+      <header className={`site-head tone-${open ? 'light' : tone} ${scrolled ? 'is-scrolled' : ''} ${open ? 'is-open' : ''}`}>
+        <Link href="/" className="brand" aria-label={`${person.short} — home`}>
+          <span className="brand-word">SAPPY</span>
+          <span className="brand-bn bn" lang="bn" aria-hidden="true">{person.bangla}</span>
         </Link>
 
-        <nav className="ahead-nav">
-          {LINKS.map((item, i) => (
+        <nav className="site-nav" aria-label="Primary">
+          {LINKS.map((item) => (
             <Link
-              key={item.label}
+              key={item.href}
               href={item.href}
-              className={`ahead-link ${pathname === item.href ? 'is-active' : ''}`}
-              style={{ '--d': `${0.1 + i * 0.07}s` }}
+              className={isActive(item.href) ? 'is-active' : ''}
+              aria-current={isActive(item.href) ? 'page' : undefined}
             >
               {item.label}
             </Link>
           ))}
+          <Link href="/contact" className={`site-cta ${isActive('/contact') ? 'is-active' : ''}`}>
+            Contact
+          </Link>
         </nav>
 
-        <Link href="/contact" className="ahead-cta">
-          <span className="ahead-cta-fill" />
-          <span className="ahead-cta-label">Let&apos;s Talk</span>
-        </Link>
-
         <button
-          className={`ahead-burger ${isMenuOpen ? 'open' : ''}`}
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
+          ref={burgerRef}
+          type="button"
+          className="burger"
+          aria-expanded={open}
+          aria-controls="site-menu"
+          onClick={() => setOpen((v) => !v)}
         >
-          <span></span>
-          <span></span>
-          <span></span>
+          <span className="burger-lines" aria-hidden="true"><i /><i /></span>
+          <span className="burger-label">{open ? 'Close' : 'Menu'}</span>
         </button>
       </header>
 
-      {/* Mobile overlay */}
-      <div className={`ahead-overlay ${isMenuOpen ? 'open' : ''}`}>
-        <nav className="ahead-overlay-nav">
-          {[...LINKS, { label: "Let's Talk", href: '/contact' }].map((item, i) => (
-            <Link
-              key={item.label}
-              href={item.href}
-              className="ahead-overlay-link"
-              style={{ '--d': `${0.05 + i * 0.06}s` }}
-            >
+      <div id="site-menu" ref={menuRef} className={`menu ${open ? 'is-open' : ''}`} inert={open ? undefined : ''}>
+        <nav aria-label="Menu">
+          {[{ label: 'Home', href: '/' }, ...LINKS, { label: 'Contact', href: '/contact' }].map((item, i) => (
+            <Link key={item.href} href={item.href} style={{ '--i': i }} aria-current={pathname === item.href ? 'page' : undefined}>
               <span>{item.label}</span>
-              <span className="arrow">↗</span>
+              <span aria-hidden="true">↗</span>
             </Link>
           ))}
         </nav>
+        <p className="menu-foot">
+          <a href={`mailto:${person.email}`}>{person.email}</a>
+        </p>
       </div>
     </>
   );

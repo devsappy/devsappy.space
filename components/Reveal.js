@@ -7,6 +7,7 @@ export default function Reveal({
   as: Tag = 'div',
   className = '',
   delay = 0,
+  style,
   ...rest
 }) {
   const ref = useRef(null);
@@ -14,7 +15,7 @@ export default function Reveal({
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) return undefined;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -32,7 +33,7 @@ export default function Reveal({
     <Tag
       ref={ref}
       className={`reveal ${inView ? 'is-in' : ''} ${className}`}
-      style={{ transitionDelay: `${delay}s` }}
+      style={{ ...style, transitionDelay: delay ? `${delay}s` : undefined }}
       {...rest}
     >
       {children}

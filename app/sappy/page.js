@@ -1,160 +1,101 @@
-import Header from '@/components/Header';
-import SiteFooter from '@/components/SiteFooter';
+import CareerTracks from '@/components/CareerTracks';
+import PageCta from '@/components/PageCta';
 import Reveal from '@/components/Reveal';
-import Image from 'next/image';
-import profilePic from '../../DSC_8261.JPG';
+import { person, experience, education, services, clients, period } from '@/lib/content';
 
-const stats = [
-  { num: "4+", label: "Years experience" },
-  { num: "30+", label: "Projects shipped" },
-  { num: "100%", label: "Client focused" },
-];
+export const metadata = {
+  title: 'About',
+  description:
+    'About Saptarshi Chattopadhyay (Sappy): full-stack engineer and video editor in India. Experience at Multiplier AI, Vibe Engine AI, OD Solution and Brainly; B.Tech at IEM Kolkata.',
+  alternates: { canonical: '/sappy' },
+};
 
-const services = [
-  "Web Development",
-  "React & Next.js",
-  "3D & WebGL (Three.js)",
-  "Motion & GSAP Animation",
-  "Python & FastAPI Backends",
-  "AI / LLM Integration",
-  "Video Editing & Motion Graphics",
-];
+export default function About() {
+  const roles = [
+    ...experience.map((e) => ({ key: e.role + e.org, what: e.role, where: e.org, when: period(e.start, e.end), desc: e.desc })),
+    ...education.map((e) => ({ key: e.degree, what: e.degree, where: e.school, when: period(e.start, e.end) })),
+  ];
 
-const experience = [
-  {
-    role: "Research & Development Specialist",
-    org: "Multiplier AI",
-    period: "Jun 2026 — Present",
-    desc: "Conducting research across revenue and marketing-related aspects to support product and business decisions.",
-  },
-  {
-    role: "Full Stack Engineer",
-    org: "Vibe Engine AI",
-    period: "Aug 2025 — Jun 2026",
-    desc: "Built interactive, animation-driven web apps with React, Next.js, Tailwind CSS and a Python/FastAPI backend — including Three.js 3D visualizations and GSAP-driven storytelling.",
-  },
-  {
-    role: "Video Editor",
-    org: "OD Solution, Austria",
-    period: "Feb 2025 — Oct 2025",
-    desc: "Edited video content and motion graphics using Adobe Premiere Pro and After Effects.",
-  },
-  {
-    role: "Frontend & AI/ML Developer",
-    org: "Brainly",
-    period: "May 2023 — Jul 2023",
-    desc: "Built frontend features in React and contributed to model training work.",
-  },
-];
-
-const education = [
-  {
-    degree: "B.Tech, Electronics & Communication Engineering",
-    school: "Institute of Engineering and Management, Kolkata",
-    period: "Jul 2023 — May 2027",
-  },
-  {
-    degree: "Higher Secondary, PCMC",
-    school: "Kalyani Public School",
-    period: "Apr 2021 — Apr 2023",
-  },
-];
-
-export default function Sappy() {
   return (
-    <div className="apage">
-      <Header />
+    <main id="main" className="page page--mist" data-tone="light">
+      <section className="wrap about" data-clip="About" data-clip-color="#D6E3F2" data-tone="light">
+        <header className="page-head about-head">
+          <Reveal as="p" className="label">About</Reveal>
+          <h1 className="page-title page-title--name">
+            <Reveal as="span" className="line">Saptarshi</Reveal>
+            <Reveal as="span" className="line" delay={0.06}>Chattopadhyay</Reveal>
+          </h1>
+          <Reveal as="p" className="about-bn bn" lang="bn" delay={0.12}>{person.banglaFull}</Reveal>
+        </header>
 
-      <main className="apage-main">
-        <section className="about-hero">
-          <div className="about-intro">
-            <Reveal as="p" className="ap-eyebrow">[ About — Sappy ]</Reveal>
-            <h1 className="ap-title">
-              <span className="line-mask"><span className="line-inner is-static">CREATIVE</span></span>
-              <span className="line-mask"><span className="line-inner is-static">DIGITAL</span></span>
-              <span className="line-mask"><span className="line-inner is-static">PARTNER</span></span>
-            </h1>
-          </div>
-          <Reveal className="about-portrait" delay={0.15}>
-            <div className="about-portrait-inner">
-              <Image src={profilePic} alt="Sappy" priority />
-            </div>
+        <div className="about-grid">
+          <Reveal as="figure" className="about-portrait">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/hero/portrait-1200.webp"
+              srcSet="/hero/portrait-720.webp 720w, /hero/portrait-1200.webp 1200w"
+              sizes="(max-width: 860px) 100vw, 40vw"
+              alt={`${person.name} in a plaid shirt on a misty hillside, looking to the left`}
+              loading="lazy"
+            />
+            <figcaption>Nikon D7200 · graded for this site</figcaption>
           </Reveal>
-        </section>
 
-        <section className="about-body">
-          <Reveal as="p" className="about-lead">
-            Hi, I&apos;m Saptarshi Chattopadhyay (Sappy) — a Full Stack Engineer based in India.
-          </Reveal>
-          <Reveal as="p" className="about-text" delay={0.05}>
-            I build interactive, performant web applications end to end — React, Next.js and
-            Tailwind CSS on the frontend, Three.js and GSAP for immersive 3D and motion, and
-            Python with FastAPI on the backend. I&apos;m currently applying that background to
-            applied research and development work, moving comfortably between research,
-            implementation and delivery.
-          </Reveal>
-          <Reveal as="p" className="about-text" delay={0.1}>
-            Alongside development, I work with AI/LLM integrations (Groq API), edit video and
-            motion graphics in Adobe Premiere Pro &amp; After Effects, and always verify what I
-            ship across devices and browsers before release. Let&apos;s build something amazing
-            together.
-          </Reveal>
-        </section>
-
-        <section className="about-stats">
-          {stats.map((s, i) => (
-            <Reveal className="about-stat" key={s.label} delay={i * 0.08}>
-              <span className="about-stat-num">{s.num}</span>
-              <span className="about-stat-label">{s.label}</span>
+          <div className="about-bio">
+            <Reveal as="p" className="about-lead">
+              Hi, I’m Saptarshi Chattopadhyay — Sappy to most people — a full-stack engineer and video
+              editor based in India.
             </Reveal>
+            <Reveal as="p" delay={0.05}>
+              I build interactive, performant web applications end to end: React, Next.js and Tailwind
+              CSS on the frontend, Three.js and GSAP for immersive 3D and motion, and Python with
+              FastAPI on the backend. I’m currently applying that background to research and
+              development work, moving between research, implementation and delivery.
+            </Reveal>
+            <Reveal as="p" delay={0.1}>
+              Alongside development I work with AI/LLM integrations (Groq API), edit video and motion
+              graphics in Adobe Premiere Pro and After Effects, and check everything I ship across
+              devices and browsers before release.
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      <section className="career" data-clip="Career" data-clip-color="#2B3E5E" data-tone="dark" aria-labelledby="career-title">
+        <div className="wrap">
+          <Reveal as="p" className="label">Career</Reveal>
+          <Reveal as="h2" id="career-title" className="career-title" delay={0.05}>
+            Four tracks, often running at once.
+          </Reveal>
+          <Reveal className="career-tracks" delay={0.1}>
+            <CareerTracks />
+          </Reveal>
+          <ol className="career-list">
+            {roles.map((r) => (
+              <Reveal as="li" key={r.key}>
+                <span className="career-when">{r.when}</span>
+                <span className="career-what">{r.what}</span>
+                <span className="career-where">{r.where}</span>
+                {r.desc && <span className="career-desc">{r.desc}</span>}
+              </Reveal>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="wrap services" data-clip="Services" data-clip-color="#BFD2E8" data-tone="light" aria-labelledby="services-title">
+        <Reveal as="p" className="label" id="services-title">What I do</Reveal>
+        <ul className="services-list">
+          {services.map((s, i) => (
+            <Reveal as="li" key={s} delay={i * 0.03}>{s}</Reveal>
           ))}
-        </section>
+        </ul>
+        <Reveal as="p" className="services-clients">
+          Worked with {clients.slice(0, -1).join(', ')} and {clients[clients.length - 1]}.
+        </Reveal>
+      </section>
 
-        <section className="about-services">
-          <Reveal as="h2" className="about-services-title">What I do</Reveal>
-          <div className="about-services-list">
-            {services.map((srv, i) => (
-              <Reveal className="about-service" key={srv} delay={i * 0.05}>
-                <span className="about-service-dot">✦</span>
-                {srv}
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <section className="about-experience">
-          <Reveal as="h2" className="about-services-title">Experience</Reveal>
-          <div className="about-exp-list">
-            {experience.map((exp, i) => (
-              <Reveal className="about-exp-item" key={exp.role + exp.org} delay={i * 0.05}>
-                <div className="about-exp-head">
-                  <h3 className="about-exp-role">{exp.role}</h3>
-                  <span className="about-exp-period">{exp.period}</span>
-                </div>
-                <span className="about-exp-org">{exp.org}</span>
-                <p className="about-exp-desc">{exp.desc}</p>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-
-        <section className="about-education">
-          <Reveal as="h2" className="about-services-title">Education</Reveal>
-          <div className="about-exp-list">
-            {education.map((ed, i) => (
-              <Reveal className="about-exp-item" key={ed.degree} delay={i * 0.05}>
-                <div className="about-exp-head">
-                  <h3 className="about-exp-role">{ed.degree}</h3>
-                  <span className="about-exp-period">{ed.period}</span>
-                </div>
-                <span className="about-exp-org">{ed.school}</span>
-              </Reveal>
-            ))}
-          </div>
-        </section>
-      </main>
-
-      <SiteFooter />
-    </div>
+      <PageCta />
+    </main>
   );
 }

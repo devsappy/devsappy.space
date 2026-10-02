@@ -1,31 +1,99 @@
-import { Inter, Playfair_Display, Caveat } from "next/font/google";
-import "./globals.css";
+import { Archivo, Martian_Mono, Anek_Bangla } from 'next/font/google';
+import Header from '@/components/Header';
+import SiteFooter from '@/components/SiteFooter';
+import Timeline from '@/components/Timeline';
+import SmoothScroll from '@/components/SmoothScroll';
+import { person, experience, education } from '@/lib/content';
+import './globals.css';
 
-const inter = Inter({ 
-  subsets: ["latin"],
-  variable: '--font-inter',
+// One family across widths: expanded for titles, normal for reading, condensed for labels.
+const archivo = Archivo({
+  subsets: ['latin'],
+  axes: ['wdth'],
+  variable: '--font-archivo',
+  display: 'swap',
 });
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: '--font-playfair',
+const mono = Martian_Mono({
+  subsets: ['latin'],
+  axes: ['wdth'],
+  variable: '--font-mono',
+  display: 'swap',
 });
 
-const caveat = Caveat({
-  subsets: ["latin"],
-  variable: '--font-caveat',
+// One static weight: the Bengali is a name, not running text (49 KB vs 437 KB variable).
+const bangla = Anek_Bangla({
+  subsets: ['bengali'],
+  weight: '500',
+  variable: '--font-bangla',
+  display: 'swap',
+  preload: false,
 });
+
+const description =
+  'Saptarshi Chattopadhyay (Sappy) — full-stack engineer and video editor in India. Interactive web apps in React, Next.js, Three.js and FastAPI; edits and motion graphics in Premiere Pro and After Effects.';
 
 export const metadata = {
-  title: "Sappy - Portfolio",
-  description: "Saptarshi Chattopadhyay — Full Stack Engineer based in India, building interactive web apps with React, Next.js, Three.js and Python/FastAPI.",
+  metadataBase: new URL(person.site),
+  title: {
+    default: 'Sappy — Saptarshi Chattopadhyay, full-stack engineer & video editor',
+    template: '%s — Sappy',
+  },
+  description,
+  applicationName: 'Sappy',
+  authors: [{ name: person.name, url: person.site }],
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    url: '/',
+    siteName: 'Sappy',
+    title: 'Sappy — Saptarshi Chattopadhyay',
+    description,
+    locale: 'en_IN',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Sappy — Saptarshi Chattopadhyay',
+    description,
+  },
+};
+
+export const viewport = {
+  themeColor: '#D6E3F2',
+  colorScheme: 'light',
+};
+
+const now = experience.find((e) => !e.end);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: person.name,
+  alternateName: person.short,
+  url: person.site,
+  image: `${person.site}/hero/still-1600.jpg`,
+  jobTitle: 'Full-stack engineer and video editor',
+  email: `mailto:${person.email}`,
+  address: { '@type': 'PostalAddress', addressCountry: 'IN' },
+  worksFor: now ? { '@type': 'Organization', name: now.org } : undefined,
+  alumniOf: education.map((e) => ({ '@type': 'EducationalOrganization', name: e.school })),
+  sameAs: [person.linkedin, person.github],
+  knowsAbout: ['React', 'Next.js', 'Three.js', 'GSAP', 'WebGL', 'Python', 'FastAPI', 'Adobe Premiere Pro', 'Adobe After Effects', 'Video editing'],
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.variable} ${playfair.variable} ${caveat.variable}`}>
+    <html lang="en" className={`${archivo.variable} ${mono.variable} ${bangla.variable}`}>
+      <body>
+        <SmoothScroll />
+        <Header />
         {children}
+        <SiteFooter />
+        <Timeline />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </body>
     </html>
   );

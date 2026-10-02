@@ -1,70 +1,69 @@
-import Header from '@/components/Header';
-import SiteFooter from '@/components/SiteFooter';
+import ContactForm from '@/components/ContactForm';
+import CopyEmail from '@/components/CopyEmail';
+import Constellation from '@/components/Constellation';
 import Reveal from '@/components/Reveal';
+import { person } from '@/lib/content';
+
+export const metadata = {
+  title: 'Contact',
+  description:
+    'Start a project with Saptarshi Chattopadhyay — websites and web apps, video editing and motion, or both. Replies usually within 24 hours.',
+  alternates: { canonical: '/contact' },
+};
 
 export default function Contact() {
   return (
-    <div className="apage">
-      <Header />
-
-      <main className="apage-main">
-        <section className="contact-wrap">
-          <div className="contact-left">
-            <Reveal as="p" className="ap-eyebrow">[ Let&apos;s Talk ]</Reveal>
-            <h1 className="ap-title contact-title">
-              <span className="line-mask"><span className="line-inner is-static">GOT A</span></span>
-              <span className="line-mask"><span className="line-inner is-static">PROJECT?</span></span>
+    <main id="main" className="page page--night" data-tone="dark">
+      <section className="wrap contact" data-clip="Contact" data-clip-color="#1B2A4A" data-tone="dark">
+        <div className="contact-intro">
+          <header className="page-head contact-head">
+            <Reveal as="p" className="label">Contact</Reveal>
+            <h1 className="page-title page-title--contact">
+              <Reveal as="span" className="line">Got a</Reveal>
+              <Reveal as="span" className="line" delay={0.06}>project?</Reveal>
             </h1>
-            <Reveal as="p" className="ap-lead" delay={0.1}>
-              Tell me about your idea and let&apos;s build something that grows
-              engagement. I usually reply within 24 hours.
+            <Reveal as="p" className="page-lead" delay={0.12}>
+              Tell me about your idea and let’s build something people remember. I usually reply
+              within 24 hours.
             </Reveal>
+          </header>
 
-            <Reveal className="contact-details" delay={0.2}>
-              <a href="mailto:saph.6869@gmail.com" className="contact-detail">
-                <span className="contact-detail-label">Email</span>
-                <span className="contact-detail-value">saph.6869@gmail.com</span>
-              </a>
-              <div className="contact-detail">
-                <span className="contact-detail-label">Based in</span>
-                <span className="contact-detail-value">India — Remote worldwide</span>
-              </div>
-              <a
-                href="https://linkedin.com/in/saptarshichattopadhyay-05380622b"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="contact-detail"
-              >
-                <span className="contact-detail-label">LinkedIn</span>
-                <span className="contact-detail-value">saptarshichattopadhyay</span>
-              </a>
-            </Reveal>
-          </div>
-
-          <Reveal className="contact-right" delay={0.15}>
-            <form className="contact-form">
-              <label className="field">
-                <span className="field-label">Your name</span>
-                <input type="text" placeholder="Jane Doe" />
-              </label>
-              <label className="field">
-                <span className="field-label">Email</span>
-                <input type="email" placeholder="jane@email.com" />
-              </label>
-              <label className="field">
-                <span className="field-label">Project details</span>
-                <textarea rows="4" placeholder="Tell me what you have in mind..." />
-              </label>
-              <button type="button" className="contact-submit">
-                <span className="contact-submit-fill" />
-                <span className="contact-submit-label">Send Message&nbsp;↗</span>
-              </button>
-            </form>
+          <Reveal as="dl" className="contact-details" delay={0.16}>
+            <div>
+              <dt>Email</dt>
+              <dd>
+                <a href={`mailto:${person.email}`}>{person.email}</a>
+                <CopyEmail email={person.email} />
+              </dd>
+            </div>
+            <div>
+              <dt>Based in</dt>
+              <dd>India — working with teams anywhere</dd>
+            </div>
+            <div>
+              <dt>Elsewhere</dt>
+              <dd className="contact-elsewhere">
+                <a href={person.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn ↗</a>
+                <a href={person.github} target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+              </dd>
+            </div>
           </Reveal>
-        </section>
-      </main>
+        </div>
 
-      <SiteFooter />
-    </div>
+        <Reveal className="contact-form-wrap" delay={0.1}>
+          <ContactForm email={person.email} />
+        </Reveal>
+      </section>
+
+      <section className="contact-sky" data-clip="Sky" data-clip-color="#14203A" data-tone="dark" aria-label="Saptarshi, the seven sages">
+        <Reveal className="contact-sky-chart" as="div">
+          <Constellation />
+        </Reveal>
+        <p className="endcard-caption wrap">
+          <span lang="bn" className="bn">{person.bangla}</span>
+          <span>Saptarshi — the seven sages. It’s what India calls the Big Dipper, and it’s my name.</span>
+        </p>
+      </section>
+    </main>
   );
 }

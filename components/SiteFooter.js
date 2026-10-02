@@ -1,32 +1,21 @@
 import Link from 'next/link';
-
-const CLIENTS = ['Multiplier AI', 'Vibe Engine', 'Od Solution', 'Brainly', 'Nblik'];
+import { person } from '@/lib/content';
 
 export default function SiteFooter() {
   return (
-    <footer className="afoot">
-      <div className="afoot-marquee" aria-hidden="true">
-        <div className="afoot-track">
-          {Array.from({ length: 2 }).map((_, k) => (
-            <span key={k}>
-              {CLIENTS.map((c) => (
-                <span className="afoot-client" key={c}>
-                  {c} <em>✦</em>
-                </span>
-              ))}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="afoot-bottom">
-        <span className="afoot-copy">© {new Date().getFullYear()} Sappy Studio — India</span>
-        <div className="afoot-links">
+    <footer className="site-foot" data-tone="dark">
+      <div className="site-foot-inner">
+        <p className="site-foot-copy">© {new Date().getFullYear()} {person.name}</p>
+        <nav className="site-foot-nav" aria-label="Footer">
           <Link href="/projects">Work</Link>
           <Link href="/sappy">About</Link>
+          <Link href="/blog">Journal</Link>
           <Link href="/contact">Contact</Link>
-        </div>
-        <span className="afoot-tag">Available for work</span>
+        </nav>
+        <p className="site-foot-keys">
+          Press <kbd>L</kbd> to play this page, <kbd>K</kbd> to stop
+        </p>
+        <p className="site-foot-status">Available for work</p>
       </div>
     </footer>
   );
