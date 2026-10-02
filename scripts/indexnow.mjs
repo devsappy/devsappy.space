@@ -2,7 +2,7 @@
 // Bing's index also feeds ChatGPT search and Copilot. Run after each deploy:
 //   npm run indexnow
 const KEY = '515efbbfe117106685d639cf0e4eed8f';
-const HOST = 'devsappy.space';
+const HOST = 'www.devsappy.space';
 
 const res = await fetch(`https://${HOST}/sitemap.xml`);
 if (!res.ok) throw new Error(`Couldn't fetch the sitemap: ${res.status}`);

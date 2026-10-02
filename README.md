@@ -58,7 +58,8 @@ Every page, the sitemap, the RSS feed, `llms.txt` and the structured data are ge
 
 ### After you deploy
 
-1. **Google Search Console.** Add the domain property, then set `GOOGLE_SITE_VERIFICATION` on Vercel to the token Google gives you (or verify by DNS). Submit `https://devsappy.space/sitemap.xml`.
+1. **Google Search Console.** Add a Domain property for `devsappy.space` (verified by DNS, it covers both www and the bare domain), or a URL-prefix property for `https://www.devsappy.space` verified with `GOOGLE_SITE_VERIFICATION`. Submit `https://www.devsappy.space/sitemap.xml`.
+   The official address is `https://www.devsappy.space`. In Vercel → Settings → Domains, set the `devsappy.space` redirect to **308 (permanent)**; it defaults to 307 (temporary).
 2. **Bing Webmaster Tools.** Import the site from Search Console, or set `BING_SITE_VERIFICATION`. Bing's index also feeds ChatGPT search and Copilot.
 3. **Ping IndexNow** after each deploy: `npm run indexnow`. It submits every sitemap URL to Bing and the other IndexNow engines. The key file is `public/515efbbfe117106685d639cf0e4eed8f.txt`.
 4. **Off-site.** Link this site from LinkedIn, GitHub and any profile you keep (Behance, Dribbble, YouTube, Upwork), and add a "Site by Sappy" credit link to the footer of each project you build. Add new profiles to `sameAs` in `lib/seo.js`.
