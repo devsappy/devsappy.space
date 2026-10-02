@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import Monitor from '@/components/Monitor';
 import { domainOf } from '@/lib/content';
@@ -131,16 +132,26 @@ export default function Selects({ projects }) {
                     <li key={s}>{s}</li>
                   ))}
                 </ul>
-                <a
-                  className="shot-link"
-                  href={p.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  tabIndex={pinned && i !== active ? -1 : undefined}
-                >
-                  <span>Open {domainOf(p.url)}</span>
-                  <span aria-hidden="true">↗</span>
-                </a>
+                <p className="shot-links">
+                  <Link
+                    className="shot-link"
+                    href={`/projects/${p.path}`}
+                    tabIndex={pinned && i !== active ? -1 : undefined}
+                  >
+                    <span>Case study</span>
+                    <span aria-hidden="true">→</span>
+                  </Link>
+                  <a
+                    className="shot-link shot-link--quiet"
+                    href={p.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    tabIndex={pinned && i !== active ? -1 : undefined}
+                  >
+                    <span>Open {domainOf(p.url)}</span>
+                    <span aria-hidden="true">↗</span>
+                  </a>
+                </p>
               </div>
             </article>
           );

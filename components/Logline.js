@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import Reveal from '@/components/Reveal';
 import { crafts, experience } from '@/lib/content';
 
@@ -13,7 +14,10 @@ export default function Logline() {
         </Reveal>
 
         <div className="crafts">
-          {[crafts.build, crafts.cut].map((c, i) => (
+          {[
+            [crafts.build, [['Website development', '/services/website-development'], ['3D & WebGL websites', '/services/3d-websites']]],
+            [crafts.cut, [['Video editing', '/services/video-editing']]],
+          ].map(([c, links], i) => (
             <Reveal className="craft" key={c.title} delay={0.08 * i}>
               <h2 className="craft-title">{c.title}</h2>
               <p className="craft-line">{c.line}</p>
@@ -25,6 +29,13 @@ export default function Logline() {
                   </div>
                 ))}
               </dl>
+              <p className="craft-links">
+                {links.map(([label, href]) => (
+                  <Link key={href} href={href}>
+                    {label} <span aria-hidden="true">→</span>
+                  </Link>
+                ))}
+              </p>
             </Reveal>
           ))}
         </div>

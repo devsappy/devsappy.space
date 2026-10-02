@@ -273,7 +273,7 @@ export default function Hero() {
 
           <h1 id="hero-title" className="hero-title">
             <span ref={wordRef} className="hero-word" aria-hidden="true">SAPPY</span>
-            <span className="sr-only">{person.name} — {person.role}, {person.location}</span>
+            <span className="sr-only">{person.name} — freelance web developer and video editor in {person.city}, {person.country}</span>
           </h1>
 
           <canvas ref={backRef} className="hero-mist hero-mist--back" aria-hidden="true" />
@@ -283,7 +283,7 @@ export default function Hero() {
             <img
               src="/hero/fg-1600.webp"
               srcSet="/hero/fg-1000.webp 1000w, /hero/fg-1600.webp 1600w, /hero/fg-1800.webp 1800w, /hero/fg-2400.webp 2400w"
-              sizes="(orientation: portrait) 160vw, max(100vw, 178vh)"
+              sizes="(orientation: portrait) 150vw, max(100vw, 178vh)"
               alt={`${person.name} on a misty hillside, looking away from the camera`}
               fetchPriority="high"
               decoding="async"
@@ -298,7 +298,7 @@ export default function Hero() {
           <p className="hero-slate">
             <span className="hero-slate-name">{person.name}</span>
             <span className="hero-slate-role">
-              {person.role} · <span lang="bn" className="bn">{person.bangla}</span> · {person.location}
+              {person.role} · <span lang="bn" className="bn">{person.bangla}</span> · {person.city}, {person.country}
             </span>
           </p>
           <div className="hero-subs" aria-hidden="true">

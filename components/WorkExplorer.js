@@ -1,5 +1,6 @@
 "use client";
 
+import Link from 'next/link';
 import { useRef, useState } from 'react';
 import Monitor from '@/components/Monitor';
 import { domainOf } from '@/lib/content';
@@ -47,10 +48,16 @@ export default function WorkExplorer({ projects }) {
                 <li key={s}>{s}</li>
               ))}
             </ul>
-            <a className="shot-link" href={p.url} target="_blank" rel="noopener noreferrer">
-              <span>Open {domainOf(p.url)}</span>
-              <span aria-hidden="true">↗</span>
-            </a>
+            <p className="shot-links">
+              <Link className="shot-link" href={`/projects/${p.path}`}>
+                <span>Read the case study</span>
+                <span aria-hidden="true">→</span>
+              </Link>
+              <a className="shot-link shot-link--quiet" href={p.url} target="_blank" rel="noopener noreferrer">
+                <span>Open {domainOf(p.url)}</span>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </p>
           </div>
         </div>
       </div>

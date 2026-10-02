@@ -34,7 +34,7 @@ export default function EndCard() {
             <a href={person.github} target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
           </li>
         </ul>
-        <p className="endcard-where">Based in India — working with teams anywhere.</p>
+        <p className="endcard-where">Based in {person.city}, {person.country} — working with teams anywhere.</p>
       </div>
 
       <p className="endcard-caption">

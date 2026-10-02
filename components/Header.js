@@ -8,6 +8,7 @@ import { person } from '@/lib/content';
 
 const LINKS = [
   { label: 'Work', href: '/projects' },
+  { label: 'Services', href: '/services' },
   { label: 'About', href: '/sappy' },
   { label: 'Journal', href: '/blog' },
 ];

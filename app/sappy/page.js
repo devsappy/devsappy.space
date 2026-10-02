@@ -1,13 +1,24 @@
+import Link from 'next/link';
+import Breadcrumbs from '@/components/Breadcrumbs';
 import CareerTracks from '@/components/CareerTracks';
+import JsonLd from '@/components/JsonLd';
 import PageCta from '@/components/PageCta';
 import Reveal from '@/components/Reveal';
 import { person, experience, education, services, clients, period } from '@/lib/content';
+import { services as servicePages } from '@/lib/services';
+import { abs, alternates, breadcrumbSchema, openGraph, PERSON_ID, SITE_UPDATED, twitter } from '@/lib/seo';
+
+const title = 'About Saptarshi Chattopadhyay — Web Developer & Video Editor';
+const description =
+  'Saptarshi Chattopadhyay (Sappy): full-stack engineer and video editor in Kolkata — Multiplier AI, Vibe Engine AI, OD Solution, Brainly; B.Tech at IEM Kolkata.';
+const image = { url: '/og/sappy.jpg', alt: 'About Saptarshi Chattopadhyay' };
 
 export const metadata = {
-  title: 'About',
-  description:
-    'About Saptarshi Chattopadhyay (Sappy): full-stack engineer and video editor in India. Experience at Multiplier AI, Vibe Engine AI, OD Solution and Brainly; B.Tech at IEM Kolkata.',
-  alternates: { canonical: '/sappy' },
+  title,
+  description,
+  alternates: alternates('/sappy'),
+  openGraph: openGraph({ path: '/sappy', title, description, image, type: 'profile', firstName: 'Saptarshi', lastName: 'Chattopadhyay', username: 'devsappy' }),
+  twitter: twitter({ title, description, image }),
 };
 
 export default function About() {
@@ -18,8 +29,23 @@ export default function About() {
 
   return (
     <main id="main" className="page page--mist" data-tone="light">
+      <JsonLd
+        data={[
+          {
+            '@type': 'ProfilePage',
+            '@id': `${abs('/sappy')}#page`,
+            url: abs('/sappy'),
+            name: title,
+            dateModified: `${SITE_UPDATED}T09:00:00+05:30`,
+            mainEntity: { '@id': PERSON_ID },
+            primaryImageOfPage: abs('/hero/portrait-1200.webp'),
+          },
+          breadcrumbSchema([{ name: 'About', path: '/sappy' }]),
+        ]}
+      />
       <section className="wrap about" data-clip="About" data-clip-color="#D6E3F2" data-tone="light">
         <header className="page-head about-head">
+          <Breadcrumbs items={[{ name: 'About', path: '/sappy' }]} />
           <Reveal as="p" className="label">About</Reveal>
           <h1 className="page-title page-title--name">
             <Reveal as="span" className="line">Saptarshi</Reveal>
@@ -44,7 +70,7 @@ export default function About() {
           <div className="about-bio">
             <Reveal as="p" className="about-lead">
               Hi, I’m Saptarshi Chattopadhyay — Sappy to most people — a full-stack engineer and video
-              editor based in India.
+              editor based in {person.city}, {person.country}.
             </Reveal>
             <Reveal as="p" delay={0.05}>
               I build interactive, performant web applications end to end: React, Next.js and Tailwind
@@ -91,7 +117,14 @@ export default function About() {
           ))}
         </ul>
         <Reveal as="p" className="services-clients">
-          Worked with {clients.slice(0, -1).join(', ')} and {clients[clients.length - 1]}.
+          Worked with {clients.slice(0, -1).join(', ')} and {clients[clients.length - 1]}. Hiring?{' '}
+          {servicePages.map((s, k) => (
+            <span key={s.slug}>
+              {k > 0 && (k === servicePages.length - 1 ? ' or ' : ', ')}
+              <Link href={`/services/${s.slug}`}>{s.title.toLowerCase()}</Link>
+            </span>
+          ))}
+          .
         </Reveal>
       </section>
 

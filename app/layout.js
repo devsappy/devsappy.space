@@ -3,7 +3,9 @@ import Header from '@/components/Header';
 import SiteFooter from '@/components/SiteFooter';
 import Timeline from '@/components/Timeline';
 import SmoothScroll from '@/components/SmoothScroll';
-import { person, experience, education } from '@/lib/content';
+import JsonLd from '@/components/JsonLd';
+import { person } from '@/lib/content';
+import { openGraph, personSchema, twitter, websiteSchema } from '@/lib/seo';
 import './globals.css';
 
 // One family across widths: expanded for titles, normal for reading, condensed for labels.
@@ -31,54 +33,39 @@ const bangla = Anek_Bangla({
 });
 
 const description =
-  'Saptarshi Chattopadhyay (Sappy) — full-stack engineer and video editor in India. Interactive web apps in React, Next.js, Three.js and FastAPI; edits and motion graphics in Premiere Pro and After Effects.';
+  'Saptarshi Chattopadhyay (Sappy) — freelance web developer and video editor in Kolkata, India. Websites in Next.js, React and Three.js; video in Premiere Pro.';
+
+// Search engines may show large image previews, full snippets and video previews.
+const verification = {
+  ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+  ...(process.env.BING_SITE_VERIFICATION ? { other: { 'msvalidate.01': process.env.BING_SITE_VERIFICATION } } : {}),
+};
 
 export const metadata = {
   metadataBase: new URL(person.site),
   title: {
-    default: 'Sappy — Saptarshi Chattopadhyay, full-stack engineer & video editor',
+    default: 'Sappy — Freelance Web Developer & Video Editor in Kolkata, India',
     template: '%s — Sappy',
   },
   description,
   applicationName: 'Sappy',
   authors: [{ name: person.name, url: person.site }],
-  alternates: { canonical: '/' },
-  openGraph: {
-    type: 'website',
-    url: '/',
-    siteName: 'Sappy',
-    title: 'Sappy — Saptarshi Chattopadhyay',
-    description,
-    locale: 'en_IN',
+  creator: person.name,
+  publisher: person.name,
+  formatDetection: { telephone: false },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large', 'max-snippet': -1, 'max-video-preview': -1 },
   },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Sappy — Saptarshi Chattopadhyay',
-    description,
-  },
+  ...(Object.keys(verification).length ? { verification } : {}),
+  openGraph: openGraph({ path: '/', title: 'Sappy — Saptarshi Chattopadhyay', description }),
+  twitter: twitter({ title: 'Sappy — Saptarshi Chattopadhyay', description }),
 };
 
 export const viewport = {
   themeColor: '#D6E3F2',
   colorScheme: 'light',
-};
-
-const now = experience.find((e) => !e.end);
-
-const jsonLd = {
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: person.name,
-  alternateName: person.short,
-  url: person.site,
-  image: `${person.site}/hero/still-1600.jpg`,
-  jobTitle: 'Full-stack engineer and video editor',
-  email: `mailto:${person.email}`,
-  address: { '@type': 'PostalAddress', addressCountry: 'IN' },
-  worksFor: now ? { '@type': 'Organization', name: now.org } : undefined,
-  alumniOf: education.map((e) => ({ '@type': 'EducationalOrganization', name: e.school })),
-  sameAs: [person.linkedin, person.github],
-  knowsAbout: ['React', 'Next.js', 'Three.js', 'GSAP', 'WebGL', 'Python', 'FastAPI', 'Adobe Premiere Pro', 'Adobe After Effects', 'Video editing'],
 };
 
 export default function RootLayout({ children }) {
@@ -90,10 +77,7 @@ export default function RootLayout({ children }) {
         {children}
         <SiteFooter />
         <Timeline />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-        />
+        <JsonLd data={[websiteSchema(), personSchema()]} />
       </body>
     </html>
   );

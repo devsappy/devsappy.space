@@ -1,22 +1,38 @@
+import Breadcrumbs from '@/components/Breadcrumbs';
 import ContactForm from '@/components/ContactForm';
+import JsonLd from '@/components/JsonLd';
 import CopyEmail from '@/components/CopyEmail';
 import Constellation from '@/components/Constellation';
 import Reveal from '@/components/Reveal';
 import { person } from '@/lib/content';
+import { abs, alternates, breadcrumbSchema, openGraph, PERSON_ID, twitter } from '@/lib/seo';
+
+const title = 'Contact — Hire a Web Developer & Video Editor';
+const description =
+  'Start a project with Saptarshi Chattopadhyay (Sappy) in Kolkata, India — websites and web apps, video editing and motion, or both. Replies usually within 24 hours.';
+const image = { url: '/og/contact.jpg', alt: 'Contact Sappy' };
 
 export const metadata = {
-  title: 'Contact',
-  description:
-    'Start a project with Saptarshi Chattopadhyay — websites and web apps, video editing and motion, or both. Replies usually within 24 hours.',
-  alternates: { canonical: '/contact' },
+  title,
+  description,
+  alternates: alternates('/contact'),
+  openGraph: openGraph({ path: '/contact', title, description, image }),
+  twitter: twitter({ title, description, image }),
 };
 
 export default function Contact() {
   return (
     <main id="main" className="page page--night" data-tone="dark">
+      <JsonLd
+        data={[
+          { '@type': 'ContactPage', '@id': `${abs('/contact')}#page`, url: abs('/contact'), name: title, about: { '@id': PERSON_ID } },
+          breadcrumbSchema([{ name: 'Contact', path: '/contact' }]),
+        ]}
+      />
       <section className="wrap contact" data-clip="Contact" data-clip-color="#1B2A4A" data-tone="dark">
         <div className="contact-intro">
           <header className="page-head contact-head">
+            <Breadcrumbs items={[{ name: 'Contact', path: '/contact' }]} />
             <Reveal as="p" className="label">Contact</Reveal>
             <h1 className="page-title page-title--contact">
               <Reveal as="span" className="line">Got a</Reveal>
@@ -38,7 +54,7 @@ export default function Contact() {
             </div>
             <div>
               <dt>Based in</dt>
-              <dd>India — working with teams anywhere</dd>
+              <dd>{person.city}, {person.country} — working with teams anywhere</dd>
             </div>
             <div>
               <dt>Elsewhere</dt>

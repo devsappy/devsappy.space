@@ -4,11 +4,32 @@ import Selects from '@/components/Selects';
 import Credits from '@/components/Credits';
 import EndCard from '@/components/EndCard';
 import Reveal from '@/components/Reveal';
-import { projects } from '@/lib/content';
+import JsonLd from '@/components/JsonLd';
+import { person, projects } from '@/lib/content';
+import { abs, alternates, PERSON_ID, projectListSchema, SITE, WEBSITE_ID } from '@/lib/seo';
+
+export const metadata = {
+  alternates: alternates('/'),
+};
 
 export default function Home() {
   return (
     <main id="main">
+      <JsonLd
+        data={[
+          {
+            '@type': 'WebPage',
+            '@id': `${SITE}/#webpage`,
+            url: SITE,
+            name: `Sappy — ${person.name}`,
+            isPartOf: { '@id': WEBSITE_ID },
+            about: { '@id': PERSON_ID },
+            primaryImageOfPage: abs('/opengraph-image.jpg'),
+            inLanguage: 'en',
+          },
+          projectListSchema(),
+        ]}
+      />
       <Hero />
       <Logline />
 
