@@ -3124,6 +3124,39 @@ span.monitor-state {
   color: var(--frost);
   text-underline-offset: 0.2em;
 }
+.svc-samples + .svc-credential {
+  border-top: 1px solid var(--line-dark);
+}
+.svc-samples-lead {
+  max-width: 46ch;
+  margin-top: 18px;
+  color: rgba(228, 236, 245, 0.72);
+}
+.samples {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: 36px;
+}
+.sample figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 16px;
+}
+.sample-title {
+  font-weight: 800;
+  font-stretch: 112%;
+  font-size: 1.15rem;
+  letter-spacing: -0.015em;
+}
+.sample-text {
+  color: rgba(228, 236, 245, 0.72);
+  font-size: 0.95rem;
+}
+.monitor-screen--wide {
+  aspect-ratio: 16 / 9;
+}
 .steps {
   list-style: none;
   display: grid;
@@ -3371,7 +3404,8 @@ span.monitor-state {
   .case-overview-grid,
   .svc-intro,
   .svc-credential-inner,
-  .svc-more {
+  .svc-more,
+  .samples {
     grid-template-columns: minmax(0, 1fr);
   }
   .cred-reel {

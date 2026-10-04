@@ -4,6 +4,7 @@ import Breadcrumbs from '@/components/Breadcrumbs';
 import Faq from '@/components/Faq';
 import Inline from '@/components/Inline';
 import JsonLd from '@/components/JsonLd';
+import MotionSamples from '@/components/MotionSamples';
 import PageCta from '@/components/PageCta';
 import ProjectCard from '@/components/ProjectCard';
 import Reveal from '@/components/Reveal';
@@ -85,6 +86,18 @@ export default function ServicePage({ params }) {
           ))}
         </ul>
       </section>
+
+      {s.samples && (
+        <section className="svc-work svc-samples" data-clip="Motion" data-clip-color="#2B3E5E" data-tone="dark" aria-labelledby="samples-h">
+          <div className="wrap">
+            <Reveal as="h2" id="samples-h" className="svc-h2">Motion samples</Reveal>
+            <Reveal as="p" className="svc-samples-lead" delay={0.06}>{s.samplesLead}</Reveal>
+            <Reveal delay={0.1}>
+              <MotionSamples clips={s.samples} />
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {related.length > 0 && (
         <section className="svc-work" data-clip="Work" data-clip-color="#2B3E5E" data-tone="dark" aria-labelledby="work-h">
